@@ -1,9 +1,9 @@
 {
   "meta": {
     "title": "Restorlot",
-    "version": "0.1",
+    "version": "0.2",
     "scope": "Los Angeles first",
-    "updated": "2026-11-24",
+    "updated": "2026-11-25",
     "contact_email": ""
   },
   "stages": [
@@ -273,7 +273,7 @@
     }
   ],
   "job_steps": [
-    { "id": "call", "order": 1, "name": "Call", "headline": "The homeowner calls at night.", "body": "Water is coming through the kitchen ceiling. The call center rep takes the address, the damage type and the insurer.", "department_ids": ["intake", "leads"], "job_ids": ["call-rep"], "record_line": { "label": "Lead", "value": "Water, burst pipe, emergency" }, "is_sample": true },
+    { "id": "call", "order": 1, "name": "Call", "headline": "The homeowner calls at night.", "body": "Water is coming through the kitchen ceiling. The call center rep takes the address, the damage type and the insurer.", "renter_variant": { "headline": "The tenant calls at night.", "body": "Water is coming through the kitchen ceiling. The call center rep takes the address, then reaches the landlord or property manager, who approves the work and holds the insurance on the building." }, "department_ids": ["intake", "leads"], "job_ids": ["call-rep"], "record_line": { "label": "Lead", "value": "Water, burst pipe, emergency" }, "is_sample": true },
     { "id": "dispatch", "order": 2, "name": "Dispatch", "headline": "A crew is on its way.", "body": "The dispatcher picks the nearest free crew and sends the job notes. The scheduler books the estimator for the morning.", "department_ids": ["intake"], "job_ids": ["dispatcher", "scheduler"], "record_line": { "label": "Crew", "value": "Assigned, estimator booked" }, "is_sample": true },
     { "id": "arrive", "order": 3, "name": "Arrival", "headline": "The crew shuts off the water.", "body": "The crew lead finds the main valve and closes it. Power goes off in the wet rooms.", "department_ids": ["mitigation"], "job_ids": ["crew-lead", "water-tech"], "record_line": { "label": "Water", "value": "Shut off at the main" }, "is_sample": true },
     { "id": "source", "order": 4, "name": "Source repair", "headline": "The plumber fixes the pipe.", "body": "A copper line in the wall split. The plumber cuts it out and replaces it. Drying can start now.", "department_ids": ["source-repair"], "job_ids": ["plumber", "leak-detection"], "record_line": { "label": "Source", "value": "Pipe replaced" }, "is_sample": true },
@@ -289,19 +289,72 @@
     { "id": "walkthrough", "order": 14, "name": "Walkthrough", "headline": "The family walks the finished house.", "body": "The project manager and the homeowner check every room. Contents come back from storage.", "department_ids": ["reconstruction", "contents"], "job_ids": ["project-manager", "storage-manager"], "record_line": { "label": "Walkthrough", "value": "Signed off, contents returned" }, "is_sample": true },
     { "id": "invoice", "order": 15, "name": "Paid", "headline": "The invoice is sent and paid.", "body": "Accounts receivable bills the insurer and the deductible. Collections follows up until the job is paid in full.", "department_ids": ["finance", "end-of-chain"], "job_ids": ["ar", "collections", "followup"], "record_line": { "label": "Paid", "value": "In full, job closed" }, "is_sample": true }
   ],
-  "sample_jobs": [
+  "neighborhoods": [
     {
-      "id": "sample-001",
-      "label": "Burst pipe, 1960s house (sample)",
-      "damage_type": "water",
-      "address": "",
-      "lat": 34.04,
-      "lng": -118.35,
-      "neighborhood": "Mid-City, Los Angeles (sample)",
-      "census_tract": "",
-      "year_built": 1962,
-      "is_sample": true
+      "id": "beverly-hills",
+      "name": "Beverly Hills",
+      "area_label": "ZIP 90210, Beverly Hills area",
+      "zcta": "90210",
+      "lat": 34.100517,
+      "lng": -118.41463,
+      "median_year_built": 1966,
+      "pct_built_before_1980": 73,
+      "pct_built_before_1960": 40,
+      "pct_renter": 29,
+      "median_home_value": 2000000,
+      "median_home_value_topcoded": true,
+      "median_household_income": 187801,
+      "housing_units": 9531,
+      "source_ids": ["acs-2024", "gazetteer-2024"]
+    },
+    {
+      "id": "boyle-heights",
+      "name": "Boyle Heights",
+      "area_label": "ZIP 90033, Boyle Heights",
+      "zcta": "90033",
+      "lat": 34.05038,
+      "lng": -118.211991,
+      "median_year_built": 1952,
+      "pct_built_before_1980": 74,
+      "pct_built_before_1960": 58,
+      "pct_renter": 82,
+      "median_home_value": 707200,
+      "median_home_value_topcoded": false,
+      "median_household_income": 59652,
+      "housing_units": 13956,
+      "source_ids": ["acs-2024", "gazetteer-2024"]
+    },
+    {
+      "id": "south-la",
+      "name": "South LA",
+      "area_label": "ZIP 90011, Historic South-Central",
+      "zcta": "90011",
+      "lat": 34.00709,
+      "lng": -118.258681,
+      "median_year_built": 1955,
+      "pct_built_before_1980": 72,
+      "pct_built_before_1960": 55,
+      "pct_renter": 74,
+      "median_home_value": 595400,
+      "median_home_value_topcoded": false,
+      "median_household_income": 59017,
+      "housing_units": 25201,
+      "source_ids": ["acs-2024", "gazetteer-2024"]
     }
+  ],
+  "sample_jobs": [
+    { "id": "sample-bh", "neighborhood_id": "beverly-hills", "label": "Burst pipe, house built around 1966", "damage_type": "water", "address": "", "lat": 34.100517, "lng": -118.41463, "neighborhood": "Beverly Hills (ZIP 90210)", "census_tract": "", "year_built": 1966, "is_sample": true },
+    { "id": "sample-bo", "neighborhood_id": "boyle-heights", "label": "Burst pipe, house built around 1952", "damage_type": "water", "address": "", "lat": 34.05038, "lng": -118.211991, "neighborhood": "Boyle Heights (ZIP 90033)", "census_tract": "", "year_built": 1952, "is_sample": true },
+    { "id": "sample-sla", "neighborhood_id": "south-la", "label": "Burst pipe, house built around 1955", "damage_type": "water", "address": "", "lat": 34.00709, "lng": -118.258681, "neighborhood": "South LA (ZIP 90011)", "census_tract": "", "year_built": 1955, "is_sample": true }
+  ],
+  "glossary": [
+    { "term": "Mitigation", "plain": "The emergency work that stops damage from growing: removing water, soot or mold and drying the building." },
+    { "term": "Reconstruction", "plain": "Rebuilding what mitigation tore out: drywall, floors, cabinets, paint." },
+    { "term": "Adjuster", "plain": "The person who decides what the insurance pays. A public adjuster works for the homeowner instead of the insurer." },
+    { "term": "TPA", "plain": "Third-party administrator. A company that manages claims and contractor programs for insurers." },
+    { "term": "Xactimate", "plain": "The estimating software many insurers and contractors use to price repairs line by line." },
+    { "term": "Supplement", "plain": "Extra charges sent to the insurer after the first estimate, with proof such as photos and drying logs." },
+    { "term": "Pack-out", "plain": "Boxing up a family's belongings, listing them and moving them to storage during the work." }
   ],
   "sources": [
     { "id": "epa-rrp", "title": "Lead Renovation, Repair and Painting Program (homes built before 1978)", "publisher": "US EPA", "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program", "accessed": "2026-11-24" },
@@ -310,6 +363,8 @@
     { "id": "epa-mold", "title": "Mold", "publisher": "US EPA", "url": "https://www.epa.gov/mold", "accessed": "2026-11-24" },
     { "id": "iicrc", "title": "IICRC certifications (WRT, ASD, AMRT, FSRT)", "publisher": "IICRC", "url": "https://www.iicrc.org/", "accessed": "2026-11-24" },
     { "id": "xactimate", "title": "Xactimate", "publisher": "Verisk", "url": "https://www.verisk.com/products/xactimate/", "accessed": "2026-11-24" },
-    { "id": "epa-608", "title": "Section 608 technician certification (refrigerant handling)", "publisher": "US EPA", "url": "https://www.epa.gov/section608", "accessed": "2026-11-25" }
+    { "id": "epa-608", "title": "Section 608 technician certification (refrigerant handling)", "publisher": "US EPA", "url": "https://www.epa.gov/section608", "accessed": "2026-11-25" },
+    { "id": "acs-2024", "title": "American Community Survey 2020-2024 5-year estimates, tables B25035, B25034, B25003, B25077, B19013, for ZIP areas 90210, 90033, 90011", "publisher": "US Census Bureau, via Census Reporter", "url": "https://censusreporter.org/data/table/?table=B25035&geo_ids=86000US90210,86000US90033,86000US90011", "accessed": "2026-11-25" },
+    { "id": "gazetteer-2024", "title": "2024 Gazetteer, ZIP Code Tabulation Areas (center points)", "publisher": "US Census Bureau", "url": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html", "accessed": "2026-11-25" }
   ]
 }

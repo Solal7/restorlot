@@ -158,6 +158,51 @@ details[open] summary{border-bottom:1px dashed var(--rule)}
 .fields dd{margin:0}
 .soon{display:inline-block;font:600 .75rem var(--mono);text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:3px 10px;margin-bottom:16px}
 
+/* Start here */
+#start{padding:56px 0}
+.howto{list-style:none;padding:0;margin:24px 0;display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:768px){.howto{grid-template-columns:repeat(3,1fr)}}
+.howto li{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:20px}
+.howto li span{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 .9rem var(--mono);margin-bottom:12px}
+.howto p{color:var(--muted);font-size:.95rem}
+.gloss summary{font-weight:600}
+.gloss dl{margin:0;padding:8px 14px 14px;display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:768px){.gloss dl{grid-template-columns:1fr 1fr}}
+.gloss dt{font:700 1rem var(--serif)}
+.gloss dd{margin:2px 0 0;color:var(--muted);font-size:.95rem}
+
+/* LA demo */
+.hoods{border:0;padding:0;margin:24px 0;display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:640px){.hoods{grid-template-columns:repeat(3,1fr)}}
+.hoods legend{padding:0;margin-bottom:8px}
+.hood-opt{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center;background:var(--white);border:1.5px solid var(--rule);border-radius:var(--r);padding:14px 16px;cursor:pointer}
+.hood-opt input{grid-row:span 2;width:18px;height:18px;accent-color:var(--water);margin:0}
+.hood-opt strong{font:700 1.1rem var(--serif)}
+.hood-opt .meta{font:.78rem var(--mono);color:var(--muted)}
+.hood-opt:hover{border-color:var(--ink)}
+.hood-opt:has(input:checked){border-color:var(--water);box-shadow:0 0 0 2px var(--water)}
+.hood-opt:has(input:focus-visible){outline:3px solid var(--water);outline-offset:2px}
+.demo-grid{display:grid;gap:32px;grid-template-columns:1fr;align-items:start;margin-top:8px}
+@media (min-width:900px){.demo-grid{grid-template-columns:1fr 1fr}}
+.house{background:var(--white);border:1px solid var(--ink);border-radius:var(--r);padding:20px}
+.house h3{font-size:1.35rem;margin-bottom:4px}
+.house .sub{font:.8rem var(--mono);color:var(--muted)}
+.facts{margin:0;display:grid;gap:0}
+.facts div{display:grid;grid-template-columns:1fr auto;gap:12px;padding:8px 0;border-top:1px dashed var(--rule)}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font:600 1rem var(--mono)}
+.changes{padding-left:1.2em;margin:0 0 20px}
+.changes li{margin-bottom:10px}
+.cmp-title{margin-top:40px}
+.table-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:var(--r);background:var(--white)}
+#compare{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem}
+#compare th,#compare td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--rule)}
+#compare tbody tr:last-child th,#compare tbody tr:last-child td{border-bottom:0}
+#compare thead th{font:700 1rem var(--serif)}
+#compare tbody th{font-weight:400;color:var(--muted)}
+#compare td{font-family:var(--mono)}
+#compare .sel{background:#E3EEF3}
+
 /* Footer */
 footer{background:var(--ink);color:var(--paper);padding:56px 0 40px}
 footer a{color:#9FD0E8}
@@ -182,6 +227,7 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
     </a>
     <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Sections">
+      <a href="#demo">LA demo</a>
       <a href="#job">The job</a>
       <a href="#departments">Departments</a>
       <a href="#record">One record</a>
@@ -196,9 +242,9 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
       <div class="card">
         <p class="eyebrow">Property restoration, mapped</p>
         <h1>Every department and every job that brings a damaged property back.</h1>
-        <p class="lede">A burst pipe, a fire, a flood or mold. Follow one job from the first call to the final payment, then open any department to see who does the work.</p>
+        <p class="lede">When a pipe bursts or a fire hits a house, many people work on the repair. This site shows who they are, what they do and in what order, using real Los Angeles neighborhoods.</p>
         <div class="actions">
-          <a class="btn" href="#job">Follow a job</a>
+          <a class="btn" href="#demo">Follow a job</a>
           <a class="btn ghost" href="#contact">Contact</a>
         </div>
         <small id="hero-count">Los Angeles first. Sample data is marked.</small>
@@ -207,6 +253,46 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
         <p><strong>The content file did not load.</strong> This page reads <code>departments.json</code>, which browsers block when a file is opened directly from disk.</p>
         <p>Open a terminal in this folder, run <code>python3 -m http.server</code>, then visit <code>http://localhost:8000</code>.</p>
       </div>
+    </div>
+  </section>
+
+  <section id="start" aria-labelledby="start-title">
+    <div class="wrap">
+      <p class="eyebrow">Start here</p>
+      <h2 id="start-title">Three ways to read this site.</h2>
+      <ol class="howto">
+        <li><span>1</span><h3>Pick a house</h3><p>Choose one of three Los Angeles neighborhoods. A typical house is built from US Census data.</p><a href="#demo">Pick a house</a></li>
+        <li><span>2</span><h3>Follow the job</h3><p>Fifteen steps show what happens after a pipe bursts, and who does each part.</p><a href="#job">Follow the job</a></li>
+        <li><span>3</span><h3>Open a department</h3><p>Each department lists its jobs, daily tasks, tools and who gets the job next.</p><a href="#departments">See departments</a></li>
+      </ol>
+      <details class="gloss">
+        <summary>Words you will see, in plain English</summary>
+        <dl id="glossary"></dl>
+      </details>
+    </div>
+  </section>
+
+  <section id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <p class="eyebrow">Try it in Los Angeles</p>
+      <h2 id="demo-title">Same burst pipe, three neighborhoods.</h2>
+      <p class="lede">Pick a neighborhood. The page builds a typical house from Census data and shows what that changes for the job.</p>
+      <fieldset class="hoods" id="hoods"><legend class="eyebrow">Neighborhood</legend></fieldset>
+      <div class="demo-grid">
+        <article class="house">
+          <h3 id="house-title"></h3>
+          <p class="sub" id="house-sub"></p>
+          <dl class="facts" id="house-facts"></dl>
+        </article>
+        <div>
+          <h3>What this changes for the job</h3>
+          <ul class="changes" id="changes"></ul>
+          <a class="btn" href="#job">Follow this house's job</a>
+        </div>
+      </div>
+      <h3 class="cmp-title">Side by side</h3>
+      <div class="table-wrap"><table id="compare"></table></div>
+      <p class="sample-note">Source: US Census Bureau, American Community Survey 2020 to 2024, 5-year estimates, by ZIP area, <a href="https://censusreporter.org/data/table/?table=B25035&amp;geo_ids=86000US90210,86000US90033,86000US90011" rel="noopener">via Census Reporter</a>. ZIP areas approximate the neighborhoods. Values are medians or shares, rounded.</p>
     </div>
   </section>
 
@@ -285,10 +371,10 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
       <p class="eyebrow">Neighborhood layer</p>
       <h2 id="hood-title">Where the damage happens.</h2>
       <div class="hood">
-        <svg id="parcels" viewBox="0 0 400 260" role="img" aria-label="Sketch of a city block with the sample job's parcel marked"></svg>
+        <svg id="parcels" viewBox="0 0 400 260" role="img" aria-label="Map sketch of the three sample neighborhoods, placed by their Census center points"></svg>
         <div>
-          <span class="soon">Coming in v0.3</span>
-          <p>Every job in the data carries a location. That lets Restorlot become a layer on the City Pretty map, showing which neighborhoods carry the most repair risk: old pipes, wildfire smoke, flooding.</p>
+          <span class="soon">Full map coming in v0.3</span>
+          <p>Every job in the data carries a location. The sketch places the three sample houses at the Census center point of their ZIP area. Later, Restorlot becomes a layer on the City Pretty map, showing which neighborhoods carry the most repair risk.</p>
           <p>Build year matters most. Homes built before 1978 fall under EPA lead-safe work rules, so they need testing before demolition. <a href="https://www.epa.gov/lead/renovation-repair-and-painting-program" rel="noopener">EPA source</a>.</p>
           <dl class="fields" id="fields"></dl>
         </div>
@@ -349,14 +435,73 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
     $("hero-count").textContent = D.departments.length + " departments, " + nJobs + " jobs, " + D.job_steps.length + " steps. " + D.meta.scope + ". Sample data is marked.";
     $("ver").textContent = D.meta.version; $("upd").textContent = D.meta.updated;
     if (D.meta.contact_email) { var a = el("a", null, D.meta.contact_email); a.href = "mailto:" + D.meta.contact_email; var cl = $("contact-line"); cl.textContent = "Write to "; cl.appendChild(a); }
-    renderSteps(); renderMap(); renderFull(); renderHood(); renderSources();
+    renderGlossary(); renderDemo(); renderSteps(); renderMap(); renderFull(); renderSources();
+    setHood(D.neighborhoods[0].id);
+  }
+
+  // ---------- Glossary and LA demo ----------
+  var hood = null, usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }), num = new Intl.NumberFormat("en-US");
+  function hoodById(id){ return D.neighborhoods.filter(function(n){ return n.id === id; })[0]; }
+  function jobFor(id){ return D.sample_jobs.filter(function(j){ return j.neighborhood_id === id; })[0]; }
+  function money(n, top){ return usd.format(n) + (top ? " or more" : ""); }
+  function renderGlossary(){
+    var dl = $("glossary");
+    D.glossary.forEach(function(g){ var w = el("div"); w.appendChild(el("dt", null, g.term)); w.appendChild(el("dd", null, g.plain)); dl.appendChild(w); });
+  }
+  var ROWS = [
+    ["Typical year built", function(n){ return String(n.median_year_built); }],
+    ["Built before 1980", function(n){ return n.pct_built_before_1980 + "%"; }],
+    ["Built before 1960", function(n){ return n.pct_built_before_1960 + "%"; }],
+    ["Homes rented", function(n){ return n.pct_renter + "%"; }],
+    ["Median home value", function(n){ return money(n.median_home_value, n.median_home_value_topcoded); }],
+    ["Median household income", function(n){ return usd.format(n.median_household_income); }],
+    ["Housing units", function(n){ return num.format(n.housing_units); }]
+  ];
+  function renderDemo(){
+    var fs = $("hoods");
+    D.neighborhoods.forEach(function(n){
+      var lab = el("label", "hood-opt"), inp = el("input");
+      inp.type = "radio"; inp.name = "hood"; inp.value = n.id;
+      inp.addEventListener("change", function(){ setHood(n.id); });
+      lab.appendChild(inp); lab.appendChild(el("strong", null, n.name)); lab.appendChild(el("span", "meta", n.area_label));
+      fs.appendChild(lab);
+    });
+    var t = $("compare"), head = el("thead"), hr = el("tr"); hr.appendChild(el("th", null, ""));
+    D.neighborhoods.forEach(function(n){ var th = el("th", null, n.name); th.scope = "col"; th.dataset.hood = n.id; hr.appendChild(th); });
+    head.appendChild(hr); t.appendChild(head);
+    var body = el("tbody");
+    ROWS.forEach(function(r){
+      var tr = el("tr"), th = el("th", null, r[0]); th.scope = "row"; tr.appendChild(th);
+      D.neighborhoods.forEach(function(n){ var td = el("td", null, r[1](n)); td.dataset.hood = n.id; tr.appendChild(td); });
+      body.appendChild(tr);
+    });
+    t.appendChild(body);
+  }
+  function setHood(id){
+    var n = hoodById(id), sj = jobFor(id); if (!n || !sj) return;
+    hood = n;
+    Array.prototype.forEach.call(document.querySelectorAll("#hoods input"), function(i){ i.checked = i.value === id; });
+    Array.prototype.forEach.call(document.querySelectorAll("#compare [data-hood]"), function(c){ c.classList.toggle("sel", c.dataset.hood === id); });
+    $("house-title").textContent = "A typical house in " + n.name;
+    $("house-sub").textContent = n.area_label + ". Sample house built from Census medians.";
+    var f = $("house-facts"); f.textContent = "";
+    ROWS.slice(0, 5).forEach(function(r){ var w = el("div"); w.appendChild(el("dt", null, r[0])); w.appendChild(el("dd", null, r[1](n))); f.appendChild(w); });
+    var ch = $("changes"); ch.textContent = "";
+    if (n.median_year_built < 1978) ch.appendChild(el("li", null, "Testing comes first. A typical house here dates from around " + n.median_year_built + ", before 1978, so EPA lead-safe rules apply and the walls get tested before anyone cuts."));
+    ch.appendChild(el("li", null, n.pct_built_before_1960 + "% of homes here were built before 1960, and " + n.pct_built_before_1980 + "% before 1980. Older houses mean older materials behind the walls."));
+    if (n.pct_renter >= 50) ch.appendChild(el("li", null, n.pct_renter + "% of homes are rented. The first call often comes from a tenant, and the landlord or property manager approves the work. Step 1 of the job changes to match."));
+    else ch.appendChild(el("li", null, (100 - n.pct_renter) + "% of homes are lived in by their owners. The owner usually calls and deals with the insurer directly."));
+    ch.appendChild(el("li", null, "The median home is worth " + money(n.median_home_value, n.median_home_value_topcoded) + ". The rebuild is what brings that value back."));
+    $("job-title").textContent = "A burst pipe in a " + n.name + " house.";
+    $("record-id").textContent = "Job " + sj.id; $("full-id").textContent = "Job " + sj.id;
+    $("record-sub").textContent = sj.label + ", " + sj.neighborhood + " (sample)";
+    renderHood(sj);
+    if ($("steps").children.length) go(cur, false);
   }
 
   // ---------- Follow one job ----------
   function renderSteps(){
-    var ol = $("steps"), sj = D.sample_jobs[0];
-    $("record-id").textContent = "Job " + sj.id; $("full-id").textContent = "Job " + sj.id;
-    $("record-sub").textContent = sj.label;
+    var ol = $("steps");
     D.job_steps.forEach(function(s, i){
       var li = el("li"), b = el("button");
       b.setAttribute("role", "tab"); b.id = "tab-" + s.id; b.setAttribute("aria-controls", "step-panel");
@@ -384,8 +529,9 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
       if (on) { $("step-panel").setAttribute("aria-labelledby", b.id); if (focusTab) b.focus({ preventScroll: true }); var ol = $("steps"); if (ol.scrollWidth > ol.clientWidth) ol.scrollLeft = b.parentNode.offsetLeft - (ol.clientWidth - b.offsetWidth) / 2; }
     });
     $("step-eyebrow").textContent = "Step " + s.order + " of " + n + ", " + s.name;
-    $("step-headline").textContent = s.headline;
-    $("step-body").textContent = s.body;
+    var v = (s.renter_variant && hood && hood.pct_renter >= 50) ? s.renter_variant : s;
+    $("step-headline").textContent = v.headline;
+    $("step-body").textContent = v.body;
     var who = $("step-who"); who.textContent = "";
     s.job_ids.forEach(function(id){
       var j = jobs[id]; if (!j) return;
@@ -505,25 +651,27 @@ footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
 
   // ---------- One record, neighborhood, sources ----------
   function renderFull(){ var dl = $("full-lines"); D.job_steps.forEach(function(s){ dl.appendChild(recRow(s.record_line, false)); }); }
-  function renderHood(){
-    var sj = D.sample_jobs[0], dl = $("fields");
-    [["lat", sj.lat], ["lng", sj.lng], ["neighborhood", sj.neighborhood], ["census_tract", sj.census_tract || "to come"], ["year_built", sj.year_built + " (sample)"], ["damage_type", sj.damage_type]].forEach(function(f){
+  function renderHood(sj){
+    var dl = $("fields"); dl.textContent = "";
+    [["neighborhood", sj.neighborhood], ["lat", sj.lat], ["lng", sj.lng], ["census_tract", sj.census_tract || "to come"], ["year_built", sj.year_built + " (median, sample)"], ["damage_type", sj.damage_type]].forEach(function(f){
       dl.appendChild(el("dt", null, f[0])); dl.appendChild(el("dd", null, String(f[1])));
     });
-    var svg = $("parcels"), NS = "http://www.w3.org/2000/svg";
+    var svg = $("parcels"), NS = "http://www.w3.org/2000/svg"; svg.textContent = "";
     function mk(tag, attrs){ var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; }
+    // Equirectangular sketch of central LA: lng -118.45 to -118.17, lat 33.98 to 34.13
+    var X = function(lng){ return (lng + 118.45) / 0.28 * 400; }, Y = function(lat){ return (34.13 - lat) / 0.15 * 260; };
     mk("rect", { x: 0, y: 0, width: 400, height: 260, fill: "#FFFDF8" });
-    mk("rect", { x: 0, y: 118, width: 400, height: 24, fill: "#EDE8DC" });
-    mk("rect", { x: 188, y: 0, width: 24, height: 260, fill: "#EDE8DC" });
-    var blocks = [[12, 12], [224, 12], [12, 152], [224, 152]];
-    blocks.forEach(function(b){
-      for (var r = 0; r < 2; r++) for (var c = 0; c < 4; c++) {
-        var x = b[0] + c * 41, y = b[1] + r * 49, hit = b[0] === 224 && b[1] === 152 && r === 0 && c === 1;
-        mk("rect", { x: x, y: y, width: 37, height: 45, fill: hit ? "#2C6E91" : "none", "fill-opacity": hit ? .18 : 0, stroke: hit ? "#2C6E91" : "#B8B1A3", "stroke-width": hit ? 2 : 1 });
-      }
+    for (var g = 40; g < 400; g += 40) mk("line", { x1: g, y1: 0, x2: g, y2: 260, stroke: "#EDE8DC" });
+    for (var h = 40; h < 260; h += 40) mk("line", { x1: 0, y1: h, x2: 400, y2: h, stroke: "#EDE8DC" });
+    D.neighborhoods.forEach(function(n){
+      var on = hood && n.id === hood.id, cx = X(n.lng), cy = Y(n.lat), right = cx < 300;
+      var c = mk("circle", { cx: cx, cy: cy, r: on ? 9 : 6, fill: on ? "#2C6E91" : "#FFFDF8", stroke: "#2C6E91", "stroke-width": 2, cursor: "pointer" });
+      c.addEventListener("click", function(){ setHood(n.id); });
+      var t = mk("text", { x: right ? cx + 14 : cx - 14, y: cy + 4, "text-anchor": right ? "start" : "end", "font-family": "system-ui, sans-serif", "font-size": 13, "font-weight": on ? 700 : 400, fill: "#1C2321" });
+      t.textContent = n.name + " " + n.zcta;
     });
-    mk("circle", { cx: 285.5, cy: 174.5, r: 7, fill: "#2C6E91" });
-    var t = mk("text", { x: 300, y: 250, "font-family": "ui-monospace, Menlo, monospace", "font-size": 11, fill: "#5A6360" }); t.textContent = sj.id + ", sample";
+    var s = mk("text", { x: 8, y: 252, "font-family": "ui-monospace, Menlo, monospace", "font-size": 10, fill: "#5A6360" }); s.textContent = "Central Los Angeles, sketch. Points: Census ZIP center points.";
+    mk("text", { x: 384, y: 20, "text-anchor": "middle", "font-family": "ui-monospace, Menlo, monospace", "font-size": 12, fill: "#5A6360" }).textContent = "N";
   }
   function renderSources(){
     var ol = $("sources");
