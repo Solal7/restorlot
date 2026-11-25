@@ -9,5 +9,6 @@
 - 2026-11-25, step 6a: git init in ~/restorlot, repo-only identity schasques@gmail.com, first commit 8163c1b on main. BRIEF.md, CLAUDE.md and research/ are gitignored (private). Vercel account confirmed: Solal7 only.
 - 2026-11-25, step 6: pushed to Solal7/restorlot; deployed by Solal on Vercel under the Agental team (his choice, transfer to a Solal7 scope later). Live: https://restorlot.vercel.app/
 - 2026-11-25, v0.2: plainer hero, "Start here" strip and glossary, LA demo (Beverly Hills 90210, Boyle Heights 90033, South LA 90011) from ACS 2020-2024 via Census Reporter and Census Gazetteer center points; step 1 switches to tenant when most homes are rented. Tested at 320/390/1440, no console errors. Census API now needs a key; Census Reporter needs none.
-- Open: cookies (site promises none; asked Solal what they are for), contact email.
+- 2026-11-25: v0.2 live on restorlot.vercel.app (commit 26ef16a), no console errors. Pushes now pre-approved (see CLAUDE.md); token in macOS Keychain via repo-only credential.helper.
+- Open: cookies (site promises none; Vercel Web Analytics is cookie-free, recommended), contact email.
 - Open: contact email (meta.contact_email is empty, site says "coming soon"); industry map vs product; a restoration owner to review section 5.
