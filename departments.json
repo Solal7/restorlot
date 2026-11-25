@@ -1,0 +1,315 @@
+{
+  "meta": {
+    "title": "Restorlot",
+    "version": "0.1",
+    "scope": "Los Angeles first",
+    "updated": "2026-11-24",
+    "contact_email": ""
+  },
+  "stages": [
+    { "id": "before", "name": "Before the call", "order": 1 },
+    { "id": "emergency", "name": "Emergency", "order": 2 },
+    { "id": "recovery", "name": "Recovery", "order": 3 },
+    { "id": "close", "name": "Close", "order": 4 },
+    { "id": "support", "name": "Runs the whole time", "order": 5 }
+  ],
+  "departments": [
+    {
+      "id": "suppliers",
+      "name": "Upstream suppliers",
+      "stage": "before",
+      "summary": "The companies that make and sell what a restoration crew carries into a house.",
+      "why_it_matters": "When a storm or fire hits a whole region, every company needs dehumidifiers at once. Suppliers decide who gets them.",
+      "external_parties": ["Drying equipment makers", "Moisture meter and thermal camera makers", "Antimicrobial and deodorizer makers", "Protective gear makers", "Building material suppliers", "Restoration supply distributors", "Equipment rental companies"],
+      "jobs": [
+        { "id": "supply-rep", "title": "Restoration supply distributor rep", "external": true, "daily_tasks": ["Take orders from restoration companies", "Track stock of dehumidifiers and chemicals", "Arrange delivery to warehouses"], "tools": ["Order system", "Inventory list", "Delivery schedule"], "certifications": [], "key_metric": "Delivery time", "hands_off_to": ["operations"] },
+        { "id": "rental-coordinator", "title": "Equipment rental coordinator", "external": true, "daily_tasks": ["Book extra drying units for busy weeks", "Check units back in and test them", "Bill rental days"], "tools": ["Rental calendar", "Unit tags", "Invoices"], "certifications": [], "key_metric": "Units available during disasters", "hands_off_to": ["operations"] }
+      ],
+      "key_metric": "Availability during disasters, delivery time",
+      "hands_off_to": ["operations"],
+      "handoff_note": "The restoration company's warehouse",
+      "source_ids": []
+    },
+    {
+      "id": "leads",
+      "name": "Lead sources and referral partners",
+      "stage": "before",
+      "summary": "Everyone who sends a damaged property to a restoration company.",
+      "why_it_matters": "Many jobs arrive through a referral. A plumber or an insurance agent often makes the first call.",
+      "external_parties": ["Homeowners", "Insurance carriers and agents", "Plumbers", "Property managers", "HOAs", "Third-party administrators (TPAs)", "Franchise call centers"],
+      "jobs": [
+        { "id": "marketing-rep", "title": "Marketing rep", "external": false, "daily_tasks": ["Visit plumbers and property managers", "Leave contact cards and follow up", "Log every referral by partner"], "tools": ["Contact list", "Phone", "Referral log"], "certifications": [], "key_metric": "Jobs referred per partner", "hands_off_to": ["intake"] },
+        { "id": "bd-rep", "title": "Business development rep", "external": false, "daily_tasks": ["Apply to carrier and TPA programs", "Meet insurance agents", "Report which partners send jobs"], "tools": ["Partner list", "Program applications", "Calendar"], "certifications": [], "key_metric": "Jobs referred per partner", "hands_off_to": ["intake"] }
+      ],
+      "key_metric": "Jobs referred per partner",
+      "hands_off_to": ["intake"],
+      "handoff_note": "",
+      "source_ids": []
+    },
+    {
+      "id": "intake",
+      "name": "Intake and dispatch",
+      "stage": "emergency",
+      "summary": "The office team that answers the call and sends people to the house.",
+      "why_it_matters": "Water spreads by the hour. The first call decides how fast a crew arrives.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "call-rep", "title": "Call center rep", "external": false, "daily_tasks": ["Answer calls, often around the clock", "Fill the intake form: address, damage type, insurer", "Tell the caller what happens next"], "tools": ["Intake form", "Phone system"], "certifications": [], "key_metric": "Time from call to arrival on site", "hands_off_to": ["intake"] },
+        { "id": "dispatcher", "title": "Dispatcher", "external": false, "daily_tasks": ["Pick the nearest free crew", "Send the address and job notes", "Track the crew until arrival"], "tools": ["Calendar", "Phone system", "Map"], "certifications": [], "key_metric": "Time from call to arrival on site", "hands_off_to": ["mitigation", "inspection"] },
+        { "id": "scheduler", "title": "Scheduler", "external": false, "daily_tasks": ["Book inspections and return visits", "Move visits when jobs run long", "Confirm times with homeowners"], "tools": ["Calendar", "Phone system"], "certifications": [], "key_metric": "Visits kept on time", "hands_off_to": ["inspection"] }
+      ],
+      "key_metric": "Time from call to arrival on site",
+      "hands_off_to": ["mitigation", "inspection"],
+      "handoff_note": "",
+      "source_ids": []
+    },
+    {
+      "id": "source-repair",
+      "name": "Source repair",
+      "stage": "emergency",
+      "summary": "The trades that stop the water at its source: plumbing and roofing.",
+      "why_it_matters": "Drying is pointless until the leak is fixed.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "plumber", "title": "Plumber", "external": true, "daily_tasks": ["Find and cut out the broken pipe", "Replace the section and test pressure", "Write down what failed and why"], "tools": ["Pipe cutter", "Pressure gauge", "Repair parts"], "certifications": ["State plumbing license"], "key_metric": "Hours until the source is fixed", "hands_off_to": ["mitigation"] },
+        { "id": "leak-detection", "title": "Leak detection specialist", "external": true, "daily_tasks": ["Find hidden leaks in walls and slabs", "Use acoustic and thermal tools", "Mark the spot for the plumber"], "tools": ["Acoustic listener", "Thermal camera", "Moisture meter"], "certifications": [], "key_metric": "Leaks found on the first visit", "hands_off_to": ["source-repair"] },
+        { "id": "roofer-source", "title": "Roofer", "external": true, "daily_tasks": ["Tarp the open roof", "Replace damaged decking and shingles", "Check flashing around vents"], "tools": ["Tarps", "Roofing tools", "Ladder"], "certifications": ["State roofing license"], "key_metric": "Hours until the roof is closed", "hands_off_to": ["mitigation"] }
+      ],
+      "key_metric": "Hours until the source is fixed",
+      "hands_off_to": ["mitigation"],
+      "handoff_note": "",
+      "source_ids": []
+    },
+    {
+      "id": "inspection",
+      "name": "Inspection and estimating",
+      "stage": "emergency",
+      "summary": "The people who measure the damage and price the work for the insurer.",
+      "why_it_matters": "The estimate decides what the insurer pays. Every missed room is unpaid work.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "estimator", "title": "Estimator", "external": false, "daily_tasks": ["Map moisture room by room", "Scan rooms and take photos", "Write the estimate line by line"], "tools": ["Moisture meter", "Thermal camera", "Room scan app", "Estimating software (Xactimate)"], "certifications": ["IICRC WRT"], "key_metric": "Estimate accuracy, days until the insurer approves", "hands_off_to": ["mitigation", "insurance"] },
+        { "id": "project-manager", "title": "Project manager", "external": false, "daily_tasks": ["Own the job from start to finish", "Keep the homeowner and adjuster informed", "Approve crew hours and materials"], "tools": ["Job file", "Phone", "Schedule"], "certifications": ["IICRC WRT"], "key_metric": "Days from first call to final payment", "hands_off_to": ["mitigation", "insurance", "reconstruction"] }
+      ],
+      "key_metric": "Estimate accuracy, days until the insurer approves",
+      "hands_off_to": ["mitigation", "insurance"],
+      "handoff_note": "",
+      "source_ids": ["xactimate", "iicrc"]
+    },
+    {
+      "id": "testing",
+      "name": "Environmental testing",
+      "stage": "emergency",
+      "summary": "Independent testers who check for asbestos, lead and mold before anything is torn out.",
+      "why_it_matters": "Older buildings need testing before demolition. EPA lead-safe work rules apply to homes built before 1978.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "hygienist", "title": "Industrial hygienist", "external": true, "daily_tasks": ["Take air and surface samples", "Read lab results", "Write the clearance or abatement plan"], "tools": ["Air sampling pump", "Sample kits", "Lab reports"], "certifications": [], "key_metric": "Days from sample to report", "hands_off_to": ["mitigation"] },
+        { "id": "asbestos-lead-tech", "title": "Asbestos and lead testing technician", "external": true, "daily_tasks": ["Cut small samples of drywall, texture and flooring", "Test painted surfaces for lead", "Ship samples to the lab"], "tools": ["Sample kits", "Lead test kits", "Chain of custody forms"], "certifications": ["EPA-accredited asbestos inspector", "EPA lead inspector or risk assessor"], "key_metric": "Days from sample to report", "hands_off_to": ["mitigation"] }
+      ],
+      "key_metric": "Days from sample to report",
+      "hands_off_to": ["mitigation"],
+      "handoff_note": "With a clearance or an abatement plan",
+      "source_ids": ["epa-rrp", "epa-asbestos", "osha-asbestos"]
+    },
+    {
+      "id": "mitigation",
+      "name": "Emergency mitigation",
+      "stage": "emergency",
+      "summary": "The crews that stop the damage from growing: water, fire and smoke, and mold.",
+      "why_it_matters": "This is the core of a restoration company. Crews remove water, soot or mold and dry the building.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "water-tech", "title": "Water damage technician", "damage_type": "water", "external": false, "daily_tasks": ["Extract standing water", "Set air movers and dehumidifiers", "Take and log moisture readings"], "tools": ["Extraction unit", "Moisture meter", "Drying log"], "certifications": ["IICRC WRT"], "key_metric": "Drying days", "hands_off_to": ["reconstruction"] },
+        { "id": "crew-lead", "title": "Crew lead", "damage_type": "water", "external": false, "daily_tasks": ["Run the crew on site", "Decide what gets cut out", "Report progress to the project manager"], "tools": ["Moisture meter", "Job file", "Phone"], "certifications": ["IICRC WRT", "IICRC ASD"], "key_metric": "Re-work rate", "hands_off_to": ["reconstruction", "contents"] },
+        { "id": "drying-specialist", "title": "Structural drying specialist", "damage_type": "water", "external": false, "daily_tasks": ["Plan where each machine goes", "Read daily moisture logs", "Call the job dry when targets are met"], "tools": ["Dehumidifiers", "Air movers", "Thermo-hygrometer", "Drying log"], "certifications": ["IICRC ASD"], "key_metric": "Drying days", "hands_off_to": ["reconstruction"] },
+        { "id": "board-up", "title": "Board-up and tarp crew", "damage_type": "fire", "external": false, "daily_tasks": ["Board broken windows and doors", "Tarp open roofs", "Secure the site"], "tools": ["Plywood", "Tarps", "Fasteners"], "certifications": [], "key_metric": "Hours until the site is secured", "hands_off_to": ["mitigation"] },
+        { "id": "soot-tech", "title": "Soot cleaning technician", "damage_type": "fire", "external": false, "daily_tasks": ["Dry-sponge soot from walls and ceilings", "Wash surfaces with cleaning agents", "Bag contaminated items"], "tools": ["Dry sponges", "HEPA vacuum", "Cleaning agents"], "certifications": ["IICRC FSRT"], "key_metric": "Re-cleaning rate", "hands_off_to": ["reconstruction", "contents"] },
+        { "id": "odor-tech", "title": "Odor removal technician", "damage_type": "fire", "external": false, "daily_tasks": ["Find the odor source", "Run air scrubbers and deodorizers", "Seal surfaces that hold smoke"], "tools": ["Air scrubbers", "Deodorizers", "Sealer"], "certifications": ["IICRC FSRT"], "key_metric": "Odor complaints after the job", "hands_off_to": ["reconstruction"] },
+        { "id": "mold-tech", "title": "Mold remediation technician", "damage_type": "mold", "external": false, "daily_tasks": ["Build containment with plastic sheeting", "Run negative air machines", "Remove and HEPA-vacuum mold-affected materials"], "tools": ["Containment", "Negative air machine", "HEPA vacuum", "Respirator"], "certifications": ["IICRC AMRT"], "key_metric": "Clearance passed on the first test", "hands_off_to": ["testing", "reconstruction"] }
+      ],
+      "key_metric": "Drying days, re-work rate",
+      "hands_off_to": ["contents", "reconstruction"],
+      "handoff_note": "",
+      "source_ids": ["iicrc", "epa-mold"]
+    },
+    {
+      "id": "contents",
+      "name": "Contents",
+      "stage": "recovery",
+      "summary": "The team that packs, lists, cleans and stores everything inside the house.",
+      "why_it_matters": "Furniture, clothes and photos often matter more to the family than the walls.",
+      "external_parties": ["Electronics restoration partners", "Textile restoration partners"],
+      "jobs": [
+        { "id": "packout-tech", "title": "Pack-out technician", "external": false, "daily_tasks": ["Pack each room into labeled boxes", "Photograph items before packing", "Load the truck"], "tools": ["Boxes and labels", "Camera", "Moving truck"], "certifications": [], "key_metric": "Items lost or damaged", "hands_off_to": ["contents"] },
+        { "id": "contents-cleaner", "title": "Contents cleaner", "external": false, "daily_tasks": ["Sort items: clean, restore or discard", "Clean items by material", "Repack clean items"], "tools": ["Cleaning stations", "Ultrasonic tank", "Ozone room"], "certifications": [], "key_metric": "Items restored", "hands_off_to": ["contents"] },
+        { "id": "inventory-specialist", "title": "Inventory specialist", "external": false, "daily_tasks": ["List every item with a photo", "Mark items as salvage or loss", "Send the loss list to the insurer"], "tools": ["Item-by-item inventory", "Camera", "Spreadsheet"], "certifications": [], "key_metric": "Inventory complete and accurate", "hands_off_to": ["insurance"] },
+        { "id": "storage-manager", "title": "Storage manager", "external": false, "daily_tasks": ["Assign vault space per job", "Track every box in and out", "Schedule the move back"], "tools": ["Storage vaults", "Box labels", "Storage log"], "certifications": [], "key_metric": "Storage days", "hands_off_to": [] },
+        { "id": "specialty-partner", "title": "Electronics and textile restoration partner", "external": true, "daily_tasks": ["Clean smoke and water from electronics", "Wash and deodorize clothes and drapes", "Return items with a condition report"], "tools": ["Specialty cleaning lines", "Condition reports"], "certifications": [], "key_metric": "Items returned working", "hands_off_to": ["contents"] }
+      ],
+      "key_metric": "Items lost or damaged, storage days",
+      "hands_off_to": [],
+      "handoff_note": "The homeowner, once the rebuild is finished. Link to City Pretty: contents storage could fit the Loftport Vault idea.",
+      "source_ids": []
+    },
+    {
+      "id": "insurance",
+      "name": "Insurance and claims",
+      "stage": "recovery",
+      "summary": "The people who decide what gets paid, and the staff who argue for each line.",
+      "why_it_matters": "Many restoration jobs are paid by an insurer. A slow or partial approval stalls everything after it.",
+      "external_parties": ["Insurance carriers", "Third-party administrators (TPAs)"],
+      "jobs": [
+        { "id": "carrier-adjuster", "title": "Carrier adjuster", "external": true, "daily_tasks": ["Review estimates and photos", "Visit large losses", "Approve or cut line items"], "tools": ["Claim system", "Estimating software (Xactimate)"], "certifications": ["State adjuster license"], "key_metric": "Claims closed", "hands_off_to": ["insurance"] },
+        { "id": "independent-adjuster", "title": "Independent adjuster", "external": true, "daily_tasks": ["Inspect losses for carriers", "Write the adjuster's report", "Recommend a payment"], "tools": ["Camera", "Estimating software (Xactimate)"], "certifications": ["State adjuster license"], "key_metric": "Reports filed on time", "hands_off_to": ["insurance"] },
+        { "id": "public-adjuster", "title": "Public adjuster", "external": true, "daily_tasks": ["Represent the homeowner, paid by them", "Rebuild the claim with their own estimate", "Negotiate with the carrier"], "tools": ["Estimating software (Xactimate)", "Policy documents"], "certifications": ["State public adjuster license"], "key_metric": "Settlement compared with first offer", "hands_off_to": ["insurance"] },
+        { "id": "tpa-reviewer", "title": "TPA reviewer", "external": true, "daily_tasks": ["Check estimates against program rules", "Request missing photos or logs", "Send approved files to the carrier"], "tools": ["Program guidelines", "Review portal"], "certifications": [], "key_metric": "Files reviewed per day", "hands_off_to": ["insurance"] },
+        { "id": "supplement-coordinator", "title": "Claims or supplement coordinator", "external": false, "daily_tasks": ["Send extra charges to the insurer with proof", "Track every open claim", "Answer adjuster questions"], "tools": ["Estimating software (Xactimate)", "Photos and drying logs", "Insurer portals"], "certifications": [], "key_metric": "Days to approval, share of the estimate that gets paid", "hands_off_to": ["reconstruction", "finance"] }
+      ],
+      "key_metric": "Days to approval, share of the estimate that gets paid",
+      "hands_off_to": ["reconstruction", "finance"],
+      "handoff_note": "",
+      "source_ids": ["xactimate"]
+    },
+    {
+      "id": "reconstruction",
+      "name": "Reconstruction",
+      "stage": "recovery",
+      "summary": "The builders and trades that put the house back together.",
+      "why_it_matters": "This is where the property gets its value back. It is often the longest part of the job.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "rebuild-pm", "title": "Rebuild project manager", "external": false, "daily_tasks": ["Build the rebuild schedule", "Order materials and book trades", "Handle change orders"], "tools": ["Schedule", "Materials orders", "Subcontracts"], "certifications": ["EPA RRP certified renovator"], "key_metric": "Days to finish", "hands_off_to": ["finance"] },
+        { "id": "superintendent", "title": "Superintendent", "external": false, "daily_tasks": ["Run the site day to day", "Check each trade's work", "Keep the site safe and clean"], "tools": ["Schedule", "Punch list"], "certifications": ["EPA RRP certified renovator"], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "carpenter", "title": "Carpenter", "external": false, "daily_tasks": ["Replace framing and subfloor", "Hang doors and trim", "Fix what demolition opened"], "tools": ["Saws", "Nailers", "Levels"], "certifications": [], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "drywall", "title": "Drywall installer", "external": false, "daily_tasks": ["Hang new drywall", "Tape and mud seams", "Match wall texture"], "tools": ["Drywall lift", "Taping tools", "Texture sprayer"], "certifications": [], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "painter", "title": "Painter", "external": false, "daily_tasks": ["Prime and paint new walls", "Match existing colors", "Protect floors and fixtures"], "tools": ["Sprayers and rollers", "Color matching"], "certifications": ["EPA RRP certified renovator"], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "flooring", "title": "Flooring installer", "external": false, "daily_tasks": ["Prepare the subfloor", "Install new flooring", "Match transitions between rooms"], "tools": ["Moisture meter", "Flooring tools"], "certifications": [], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "cabinets", "title": "Cabinet installer", "external": false, "daily_tasks": ["Remove damaged cabinets", "Install and level new boxes", "Fit counters and hardware"], "tools": ["Levels", "Drivers", "Shims"], "certifications": [], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "electrician", "title": "Electrician", "external": true, "daily_tasks": ["Check wiring that got wet", "Replace outlets and fixtures", "Pass the electrical inspection"], "tools": ["Testers", "Wire and parts"], "certifications": ["State electrical license"], "key_metric": "Inspections passed", "hands_off_to": ["reconstruction"] },
+        { "id": "hvac", "title": "HVAC technician", "external": true, "daily_tasks": ["Clean or replace ducts", "Check the air handler", "Replace filters after smoke"], "tools": ["Duct cleaning gear", "Gauges"], "certifications": ["EPA Section 608 certification"], "key_metric": "Callbacks", "hands_off_to": ["reconstruction"] },
+        { "id": "roofer-rebuild", "title": "Roofer", "external": true, "daily_tasks": ["Replace the damaged roof section", "Match existing materials", "Pass the roof inspection"], "tools": ["Roofing tools", "Ladder"], "certifications": ["State roofing license"], "key_metric": "Leaks after the job", "hands_off_to": ["reconstruction"] },
+        { "id": "permit-coordinator", "title": "Permit coordinator", "external": false, "daily_tasks": ["File permits with the city", "Book inspections", "Keep permit records for the file"], "tools": ["City permit portal", "Calendar"], "certifications": [], "key_metric": "Days waiting on permits", "hands_off_to": ["reconstruction"] }
+      ],
+      "key_metric": "Days to finish, change orders, callbacks",
+      "hands_off_to": ["finance"],
+      "handoff_note": "Final walkthrough with the homeowner",
+      "source_ids": ["epa-rrp", "epa-608"]
+    },
+    {
+      "id": "finance",
+      "name": "Finance and collections",
+      "stage": "close",
+      "summary": "The office team that bills the job and gets the money in.",
+      "why_it_matters": "A job can be finished for weeks before it is paid. Cash flow lives here.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "ar", "title": "Accounts receivable", "external": false, "daily_tasks": ["Send invoices to insurers and owners", "Post payments as they arrive", "Flag late accounts"], "tools": ["Accounting software (QuickBooks is common)", "Invoices", "Insurer payment portals"], "certifications": [], "key_metric": "Days sales outstanding", "hands_off_to": ["finance"] },
+        { "id": "collections", "title": "Collections specialist", "external": false, "daily_tasks": ["Call about late payments", "Track down mortgage company endorsements", "Escalate disputes"], "tools": ["Aging report", "Phone", "Insurer portals"], "certifications": [], "key_metric": "Days sales outstanding", "hands_off_to": ["finance"] },
+        { "id": "bookkeeper", "title": "Bookkeeper", "external": false, "daily_tasks": ["Record costs per job", "Reconcile bank accounts", "Prepare monthly reports"], "tools": ["Accounting software"], "certifications": [], "key_metric": "Books closed on time", "hands_off_to": ["leadership"] },
+        { "id": "payroll", "title": "Payroll", "external": false, "daily_tasks": ["Collect crew hours per job", "Run payroll", "Track overtime on emergency nights"], "tools": ["Time clock", "Payroll software"], "certifications": [], "key_metric": "Payroll errors", "hands_off_to": ["leadership"] }
+      ],
+      "key_metric": "Days sales outstanding (how long it takes to get paid)",
+      "hands_off_to": ["end-of-chain"],
+      "handoff_note": "",
+      "source_ids": []
+    },
+    {
+      "id": "end-of-chain",
+      "name": "End of the chain",
+      "stage": "close",
+      "summary": "The people who haul away what was torn out and follow up once the family is home.",
+      "why_it_matters": "Wet drywall, soot and mold debris have to go somewhere. Reviews bring the next job.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "debris-hauler", "title": "Debris hauler", "external": true, "daily_tasks": ["Drop and pick up dumpsters", "Haul torn-out materials", "Sort what can be recycled"], "tools": ["Dumpsters", "Trucks"], "certifications": [], "key_metric": "Waste diverted", "hands_off_to": [] },
+        { "id": "hazwaste", "title": "Hazardous waste disposal", "external": true, "daily_tasks": ["Collect asbestos and lead waste", "Fill out waste manifests", "Deliver to approved sites"], "tools": ["Sealed bags and drums", "Waste manifests"], "certifications": [], "key_metric": "Manifests complete", "hands_off_to": [] },
+        { "id": "equipment-cleaning", "title": "Equipment cleaning crew", "external": false, "daily_tasks": ["Clean and disinfect returned machines", "Change filters", "Tag units ready for the next job"], "tools": ["Cleaning station", "Filters", "Unit tags"], "certifications": [], "key_metric": "Units ready the next day", "hands_off_to": ["operations"] },
+        { "id": "followup", "title": "Customer follow-up", "external": false, "daily_tasks": ["Call the homeowner after the job", "Ask for a review", "Log warranty requests"], "tools": ["Phone", "Review links", "Warranty log"], "certifications": [], "key_metric": "Review score", "hands_off_to": ["leads"] }
+      ],
+      "key_metric": "Waste diverted, review score",
+      "hands_off_to": ["leads"],
+      "handoff_note": "A good review starts the next referral",
+      "source_ids": []
+    },
+    {
+      "id": "operations",
+      "name": "Operations support",
+      "stage": "support",
+      "summary": "The people who keep trucks, machines, staff and safety rules ready for every job.",
+      "why_it_matters": "A crew can only respond as fast as its trucks and machines allow.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "fleet-manager", "title": "Fleet manager", "external": false, "daily_tasks": ["Keep trucks stocked and running", "Schedule maintenance", "Track fuel and mileage"], "tools": ["Fleet log", "Maintenance schedule"], "certifications": [], "key_metric": "Trucks ready", "hands_off_to": ["intake"] },
+        { "id": "warehouse-tech", "title": "Equipment and warehouse technician", "external": false, "daily_tasks": ["Check machines in and out", "Repair and test units", "Count stock of chemicals and supplies"], "tools": ["Equipment tags", "Inventory list", "Repair bench"], "certifications": [], "key_metric": "Equipment utilization", "hands_off_to": ["mitigation"] },
+        { "id": "safety-manager", "title": "Safety and compliance manager", "external": false, "daily_tasks": ["Check crews follow OSHA and lead-safe rules", "Run safety talks", "Investigate incidents"], "tools": ["Safety checklists", "Training records"], "certifications": ["EPA RRP certified renovator"], "key_metric": "Safety incidents", "hands_off_to": ["mitigation", "reconstruction"] },
+        { "id": "trainer", "title": "Trainer", "external": false, "daily_tasks": ["Teach new technicians on real jobs", "Prepare staff for IICRC courses", "Track who holds which certification"], "tools": ["Training plan", "Certification list"], "certifications": ["IICRC WRT", "IICRC ASD"], "key_metric": "Staff certified", "hands_off_to": ["mitigation"] },
+        { "id": "hr", "title": "HR", "external": false, "daily_tasks": ["Hire technicians and trades", "Handle onboarding paperwork", "Manage benefits and leave"], "tools": ["Hiring board", "HR files"], "certifications": [], "key_metric": "Open roles filled", "hands_off_to": ["operations"] },
+        { "id": "it", "title": "IT", "external": false, "daily_tasks": ["Set up phones and tablets for crews", "Manage software logins", "Back up job files"], "tools": ["Device list", "Software accounts"], "certifications": [], "key_metric": "Downtime", "hands_off_to": ["operations"] }
+      ],
+      "key_metric": "Equipment utilization, safety incidents",
+      "hands_off_to": ["mitigation", "reconstruction"],
+      "handoff_note": "",
+      "source_ids": ["osha-asbestos", "epa-rrp", "iicrc"]
+    },
+    {
+      "id": "leadership",
+      "name": "Leadership and growth",
+      "stage": "support",
+      "summary": "The owners and managers who decide where the company grows.",
+      "why_it_matters": "Leaders pick the partners, the territory and the kinds of damage the company takes on.",
+      "external_parties": [],
+      "jobs": [
+        { "id": "owner", "title": "Owner", "external": false, "daily_tasks": ["Review the week's jobs and cash", "Meet key referral partners", "Decide on hires and equipment"], "tools": ["Dashboard", "Accounting reports"], "certifications": [], "key_metric": "Gross margin", "hands_off_to": ["leadership"] },
+        { "id": "gm", "title": "General manager", "external": false, "daily_tasks": ["Run daily operations", "Hold managers to their numbers", "Fix bottlenecks between departments"], "tools": ["Dashboard", "Job board"], "certifications": [], "key_metric": "Jobs per month", "hands_off_to": ["operations"] },
+        { "id": "ops-manager", "title": "Operations manager", "external": false, "daily_tasks": ["Balance crews across open jobs", "Review drying progress", "Approve overtime"], "tools": ["Schedule", "Job board"], "certifications": ["IICRC WRT"], "key_metric": "Revenue per job", "hands_off_to": ["mitigation"] },
+        { "id": "franchise-owner", "title": "Franchise owner", "external": false, "daily_tasks": ["Follow the brand's standards", "Report to the franchisor", "Grow the local territory"], "tools": ["Franchise systems", "Dashboard"], "certifications": [], "key_metric": "Revenue per job", "hands_off_to": ["leadership"] },
+        { "id": "multi-location", "title": "Multi-location director", "external": false, "daily_tasks": ["Compare numbers across locations", "Share crews and equipment in disasters", "Open new locations"], "tools": ["Location reports"], "certifications": [], "key_metric": "Jobs per month", "hands_off_to": ["leadership"] }
+      ],
+      "key_metric": "Revenue per job, gross margin, jobs per month",
+      "hands_off_to": [],
+      "handoff_note": "",
+      "source_ids": []
+    }
+  ],
+  "job_steps": [
+    { "id": "call", "order": 1, "name": "Call", "headline": "The homeowner calls at night.", "body": "Water is coming through the kitchen ceiling. The call center rep takes the address, the damage type and the insurer.", "department_ids": ["intake", "leads"], "job_ids": ["call-rep"], "record_line": { "label": "Lead", "value": "Water, burst pipe, emergency" }, "is_sample": true },
+    { "id": "dispatch", "order": 2, "name": "Dispatch", "headline": "A crew is on its way.", "body": "The dispatcher picks the nearest free crew and sends the job notes. The scheduler books the estimator for the morning.", "department_ids": ["intake"], "job_ids": ["dispatcher", "scheduler"], "record_line": { "label": "Crew", "value": "Assigned, estimator booked" }, "is_sample": true },
+    { "id": "arrive", "order": 3, "name": "Arrival", "headline": "The crew shuts off the water.", "body": "The crew lead finds the main valve and closes it. Power goes off in the wet rooms.", "department_ids": ["mitigation"], "job_ids": ["crew-lead", "water-tech"], "record_line": { "label": "Water", "value": "Shut off at the main" }, "is_sample": true },
+    { "id": "source", "order": 4, "name": "Source repair", "headline": "The plumber fixes the pipe.", "body": "A copper line in the wall split. The plumber cuts it out and replaces it. Drying can start now.", "department_ids": ["source-repair"], "job_ids": ["plumber", "leak-detection"], "record_line": { "label": "Source", "value": "Pipe replaced" }, "is_sample": true },
+    { "id": "inspect", "order": 5, "name": "Inspection", "headline": "The estimator maps the moisture.", "body": "A moisture meter and a thermal camera show where the water went. Kitchen, hallway and part of the bathroom are wet.", "department_ids": ["inspection"], "job_ids": ["estimator", "project-manager"], "record_line": { "label": "Moisture map", "value": "Kitchen, hallway, bathroom" }, "is_sample": true },
+    { "id": "test", "order": 6, "name": "Testing", "headline": "The walls get tested before anyone cuts.", "body": "The house was built before 1978. A tester samples the drywall, texture and paint for asbestos and lead.", "department_ids": ["testing"], "job_ids": ["asbestos-lead-tech", "hygienist"], "record_line": { "label": "Testing", "value": "Samples sent to the lab, cleared" }, "source_ids": ["epa-rrp"], "is_sample": true },
+    { "id": "document", "order": 7, "name": "Photos and scan", "headline": "Every room is photographed and scanned.", "body": "The estimator scans each wet room into a floor plan. Photos show the damage before any work.", "department_ids": ["inspection"], "job_ids": ["estimator"], "record_line": { "label": "Photos and plan", "value": "Saved for the insurer" }, "is_sample": true },
+    { "id": "extract", "order": 8, "name": "Extraction", "headline": "The crew removes water and wet materials.", "body": "Technicians extract standing water. They cut out wet drywall and baseboards, and the debris goes to a dumpster.", "department_ids": ["mitigation", "end-of-chain"], "job_ids": ["water-tech", "debris-hauler"], "record_line": { "label": "Removed", "value": "Wet drywall, baseboards, pad" }, "is_sample": true },
+    { "id": "dry", "order": 9, "name": "Drying", "headline": "Machines run and readings go in a log every day.", "body": "Air movers and dehumidifiers dry the framing. A technician logs readings each day until the materials reach their dry goal.", "department_ids": ["mitigation", "operations"], "job_ids": ["drying-specialist", "water-tech"], "record_line": { "label": "Drying log", "value": "Daily readings until dry" }, "is_sample": true },
+    { "id": "packout", "order": 10, "name": "Pack-out", "headline": "The family's things go into storage.", "body": "The contents team photographs, boxes and lists every item in the kitchen and hallway. Boxes go to a storage vault.", "department_ids": ["contents"], "job_ids": ["packout-tech", "inventory-specialist", "storage-manager"], "record_line": { "label": "Contents", "value": "Boxed, listed, stored" }, "is_sample": true },
+    { "id": "estimate", "order": 11, "name": "Estimate", "headline": "The estimate goes to the insurer.", "body": "The estimator prices every line in estimating software. Photos, the floor plan and drying logs go with it.", "department_ids": ["inspection", "insurance"], "job_ids": ["estimator", "supplement-coordinator"], "record_line": { "label": "Estimate", "value": "Sent to the carrier" }, "is_sample": true },
+    { "id": "approval", "order": 12, "name": "Approval", "headline": "The adjuster approves the claim.", "body": "The adjuster questions part of the estimate. The supplement coordinator sends the drying logs as proof, and the adjuster approves it.", "department_ids": ["insurance"], "job_ids": ["carrier-adjuster", "supplement-coordinator"], "record_line": { "label": "Claim", "value": "Approved with a supplement" }, "is_sample": true },
+    { "id": "rebuild", "order": 13, "name": "Rebuild", "headline": "The house gets put back together.", "body": "The permit is filed. Drywall goes up, then paint, flooring and new lower cabinets.", "department_ids": ["reconstruction"], "job_ids": ["rebuild-pm", "permit-coordinator", "drywall", "painter", "flooring", "cabinets"], "record_line": { "label": "Rebuild", "value": "Permit, drywall, paint, floor, cabinets" }, "is_sample": true },
+    { "id": "walkthrough", "order": 14, "name": "Walkthrough", "headline": "The family walks the finished house.", "body": "The project manager and the homeowner check every room. Contents come back from storage.", "department_ids": ["reconstruction", "contents"], "job_ids": ["project-manager", "storage-manager"], "record_line": { "label": "Walkthrough", "value": "Signed off, contents returned" }, "is_sample": true },
+    { "id": "invoice", "order": 15, "name": "Paid", "headline": "The invoice is sent and paid.", "body": "Accounts receivable bills the insurer and the deductible. Collections follows up until the job is paid in full.", "department_ids": ["finance", "end-of-chain"], "job_ids": ["ar", "collections", "followup"], "record_line": { "label": "Paid", "value": "In full, job closed" }, "is_sample": true }
+  ],
+  "sample_jobs": [
+    {
+      "id": "sample-001",
+      "label": "Burst pipe, 1960s house (sample)",
+      "damage_type": "water",
+      "address": "",
+      "lat": 34.04,
+      "lng": -118.35,
+      "neighborhood": "Mid-City, Los Angeles (sample)",
+      "census_tract": "",
+      "year_built": 1962,
+      "is_sample": true
+    }
+  ],
+  "sources": [
+    { "id": "epa-rrp", "title": "Lead Renovation, Repair and Painting Program (homes built before 1978)", "publisher": "US EPA", "url": "https://www.epa.gov/lead/renovation-repair-and-painting-program", "accessed": "2026-11-24" },
+    { "id": "epa-asbestos", "title": "Asbestos", "publisher": "US EPA", "url": "https://www.epa.gov/asbestos", "accessed": "2026-11-24" },
+    { "id": "osha-asbestos", "title": "Asbestos", "publisher": "US OSHA", "url": "https://www.osha.gov/asbestos", "accessed": "2026-11-24" },
+    { "id": "epa-mold", "title": "Mold", "publisher": "US EPA", "url": "https://www.epa.gov/mold", "accessed": "2026-11-24" },
+    { "id": "iicrc", "title": "IICRC certifications (WRT, ASD, AMRT, FSRT)", "publisher": "IICRC", "url": "https://www.iicrc.org/", "accessed": "2026-11-24" },
+    { "id": "xactimate", "title": "Xactimate", "publisher": "Verisk", "url": "https://www.verisk.com/products/xactimate/", "accessed": "2026-11-24" },
+    { "id": "epa-608", "title": "Section 608 technician certification (refrigerant handling)", "publisher": "US EPA", "url": "https://www.epa.gov/section608", "accessed": "2026-11-25" }
+  ]
+}

@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restorlot: every department and every job in property restoration</title>
+<meta name="description" content="A map of the property restoration industry. Follow one water-damage job from the first call to the final payment, and open any department to see its jobs, tools and handoffs.">
+<meta name="theme-color" content="#F6F3EC">
+<style>
+:root{
+  --paper:#F6F3EC;--panel:#EDE8DC;--ink:#1C2321;--muted:#5A6360;--rule:#D9D3C7;
+  --water:#2C6E91;--fire:#B5532A;--mold:#4F6E2E;--white:#FFFDF8;
+  --serif:Charter,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,Menlo,Consolas,monospace;
+  --max:1200px;--gut:24px;--r:6px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans)}
+h1,h2,h3{font-family:var(--serif);font-weight:700;line-height:1.15;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(2.1rem,6vw,4rem)}
+h2{font-size:clamp(1.7rem,4vw,2.6rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1em}
+a{color:var(--water);text-underline-offset:3px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--water);outline-offset:2px;border-radius:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.eyebrow{font:600 .78rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 .8em}
+.lede{font-size:1.15rem;color:var(--muted);max-width:44rem}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:50}
+.skip:focus{left:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 20px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);text-decoration:none;font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{background:var(--water);border-color:var(--water);color:var(--white)}
+.btn[disabled]{opacity:.4;cursor:default;background:transparent;color:var(--ink);border-color:var(--ink)}
+section,footer{padding:72px 0;border-top:1px solid var(--rule);scroll-margin-top:60px}
+
+/* Top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(246,243,236,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;min-height:60px;gap:16px}
+.mark{display:flex;align-items:center;gap:10px;font:700 1.3rem var(--serif);color:var(--ink);text-decoration:none}
+.nav{display:flex;gap:24px}
+.nav a{color:var(--ink);text-decoration:none;font-size:.95rem}
+.nav a:hover{color:var(--water);text-decoration:underline}
+.menu-btn{display:none;background:none;border:1.5px solid var(--ink);border-radius:999px;min-height:40px;padding:6px 14px;cursor:pointer}
+@media (max-width:760px){
+  .menu-btn{display:inline-block}
+  .nav{display:none;position:absolute;left:0;right:0;top:60px;background:var(--paper);border-bottom:1px solid var(--rule);flex-direction:column;gap:0;padding:8px var(--gut) 16px}
+  .nav.open{display:flex}
+  .nav a{padding:12px 0;border-bottom:1px solid var(--rule)}
+}
+
+/* Hero */
+.hero{border-top:0;padding:96px 0 80px;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:32px 32px;background-position:-1px -1px}
+.hero .card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:clamp(24px,5vw,56px);max-width:52rem}
+.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0 16px}
+.hero small{font:.85rem var(--mono);color:var(--muted)}
+
+/* Follow one job */
+.job-grid{display:grid;gap:24px;grid-template-columns:1fr;margin-top:32px}
+@media (min-width:1024px){.job-grid{grid-template-columns:230px 1fr 300px}}
+.steps{position:relative;list-style:none;margin:0;padding:0;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+@media (min-width:1024px){.steps{flex-direction:column;overflow:visible}}
+.steps button{display:flex;gap:10px;align-items:baseline;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:var(--r);padding:8px 10px;cursor:pointer;white-space:nowrap;color:var(--muted)}
+.steps button span{font:600 .75rem var(--mono)}
+.steps button[aria-selected=true]{background:var(--white);border-color:var(--ink);color:var(--ink);font-weight:600}
+.steps button.done{color:var(--ink)}
+.steps button:hover{color:var(--water)}
+.step-panel{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:clamp(20px,4vw,40px);min-height:340px;display:flex;flex-direction:column}
+.step-panel h3{font-size:clamp(1.5rem,3vw,2.1rem)}
+.who{margin:8px 0 24px}
+.who p{font:600 .78rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.chip{display:inline-flex;align-items:center;min-height:36px;padding:4px 12px;border:1px solid var(--rule);border-radius:999px;background:var(--paper);font-size:.92rem}
+button.chip{cursor:pointer}
+button.chip:hover{border-color:var(--water);color:var(--water)}
+.step-nav{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.step-count{font:.85rem var(--mono);color:var(--muted)}
+.record{background:var(--white);border:1px solid var(--ink);border-radius:var(--r);padding:20px;font-family:var(--mono);font-size:.84rem;align-self:start}
+.record h3{font:700 .9rem var(--mono);margin:0 0 4px}
+.record .sub{color:var(--muted);margin:0 0 12px}
+.record dl{margin:0}
+.record .row{display:grid;grid-template-columns:110px 1fr;gap:8px;padding:6px 0;border-top:1px dashed var(--rule)}
+.record dt{color:var(--muted)}
+.record dd{margin:0}
+.record .new{background:#E3EEF3}
+@media (prefers-reduced-motion:no-preference){.record .new{animation:in .4s ease-out}@keyframes in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}}
+.sample-note{font:.8rem var(--mono);color:var(--muted);margin-top:16px}
+
+/* Departments map */
+.map-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:24px 0}
+.map-tools input{font:inherit;min-height:44px;padding:8px 14px;border:1.5px solid var(--ink);border-radius:999px;background:var(--white);width:min(100%,360px)}
+.map-tools output{font:.85rem var(--mono);color:var(--muted)}
+.chain{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:640px){.chain{grid-template-columns:1fr 1fr}}
+@media (min-width:1024px){.chain{grid-template-columns:repeat(4,1fr)}}
+.stage{border-top:3px solid var(--ink);padding-top:12px}
+.stage h3{font:700 .8rem var(--mono);text-transform:uppercase;letter-spacing:.08em;display:flex;justify-content:space-between}
+.stage h3 span{color:var(--muted)}
+.tiles{display:grid;gap:10px}
+.support{margin-top:24px;border-top:3px double var(--ink);padding-top:12px}
+.support .tiles{grid-template-columns:1fr}
+@media (min-width:640px){.support .tiles{grid-template-columns:1fr 1fr}}
+.tile{display:block;width:100%;text-align:left;background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px;cursor:pointer;position:relative}
+.tile:hover{border-color:var(--ink)}
+.tile strong{display:block;font:700 1.05rem var(--serif);margin-bottom:4px}
+.tile .meta{font:.78rem var(--mono);color:var(--muted)}
+.tile .matches{display:block;font-size:.85rem;color:var(--water);margin-top:6px}
+.tile.dim{opacity:.35}
+.tile.hl{border-color:var(--water);box-shadow:0 0 0 2px var(--water)}
+.stripe{display:flex;gap:3px;margin-top:8px}
+.stripe i{height:4px;flex:1;border-radius:2px}
+.water{background:var(--water)}.fire{background:var(--fire)}.mold{background:var(--mold)}
+.arrow{font:.8rem var(--mono);color:var(--muted);text-align:center;padding:2px 0}
+
+/* Department dialog */
+dialog{border:0;padding:0;background:var(--paper);color:var(--ink);max-width:none;max-height:none;width:100%;height:100%;margin:0}
+dialog::backdrop{background:rgba(28,35,33,.45)}
+@media (min-width:1024px){dialog{width:520px;margin:0 0 0 auto;border-left:1px solid var(--ink)}}
+.dlg{display:flex;flex-direction:column;height:100%}
+.dlg header{display:flex;justify-content:space-between;align-items:start;gap:12px;padding:20px var(--gut);border-bottom:1px solid var(--rule)}
+.dlg header h2{font-size:1.7rem;margin:0}
+.dlg .body{overflow-y:auto;padding:20px var(--gut) 40px}
+.close{background:none;border:1.5px solid var(--ink);border-radius:999px;min-width:44px;min-height:44px;cursor:pointer;font-size:1.1rem}
+.dlg h3{font:700 .8rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:24px 0 8px}
+details{border:1px solid var(--rule);border-radius:var(--r);background:var(--white);margin-bottom:8px}
+summary{cursor:pointer;padding:12px 14px;font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap;list-style-position:inside}
+details[open] summary{border-bottom:1px dashed var(--rule)}
+.tag{font:600 .7rem var(--mono);text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;border:1px solid var(--muted);color:var(--muted)}
+.tag.water,.tag.fire,.tag.mold{color:var(--white);border-color:transparent}
+.jd{padding:12px 14px;font-size:.95rem}
+.jd dl{margin:0;display:grid;gap:10px}
+.jd dt{font:600 .75rem var(--mono);text-transform:uppercase;color:var(--muted)}
+.jd dd{margin:2px 0 0}
+.jd ul{margin:0;padding-left:1.2em}
+.linkbtn{background:none;border:0;padding:0;color:var(--water);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.src{font-size:.88rem}
+
+/* One record */
+.compare{display:grid;gap:32px;grid-template-columns:1fr;margin-top:32px;align-items:start}
+@media (min-width:900px){.compare{grid-template-columns:1fr 60px 1fr}}
+.scatter{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
+.scatter li{background:var(--white);border:1px dashed var(--muted);border-radius:var(--r);padding:8px 12px;font-size:.92rem}
+.scatter li:nth-child(3n){transform:rotate(-1.5deg)}
+.scatter li:nth-child(4n){transform:rotate(1.2deg)}
+.to{font:1.6rem var(--mono);text-align:center;color:var(--muted)}
+@media (max-width:899px){.to{transform:rotate(90deg)}}
+
+/* Neighborhoods */
+.hood{display:grid;gap:32px;grid-template-columns:1fr;margin-top:32px;align-items:start}
+@media (min-width:900px){.hood{grid-template-columns:1.2fr 1fr}}
+.hood svg{width:100%;height:auto;background:var(--white);border:1px solid var(--rule);border-radius:var(--r)}
+.fields{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-family:var(--mono);font-size:.88rem}
+.fields dt{color:var(--muted)}
+.fields dd{margin:0}
+.soon{display:inline-block;font:600 .75rem var(--mono);text-transform:uppercase;border:1px solid var(--ink);border-radius:999px;padding:3px 10px;margin-bottom:16px}
+
+/* Footer */
+footer{background:var(--ink);color:var(--paper);padding:56px 0 40px}
+footer a{color:#9FD0E8}
+footer h2{color:var(--paper)}
+footer .cols{display:grid;gap:32px;grid-template-columns:1fr}
+@media (min-width:900px){footer .cols{grid-template-columns:1fr 1.4fr}}
+footer ol{padding-left:1.2em;font-size:.9rem}
+footer small{display:block;margin-top:40px;color:#B9BFBC;font:.8rem var(--mono)}
+.err{background:#FBE9E1;border:1px solid var(--fire);border-radius:var(--r);padding:16px;margin:24px 0}
+.err code{font-family:var(--mono)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Restorlot, back to top">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="2" y="2" width="22" height="22" fill="none" stroke="#1C2321" stroke-width="2.5"/><path d="M2 15 L11 15 L11 24" fill="none" stroke="#2C6E91" stroke-width="2.5"/></svg>
+      Restorlot
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Sections">
+      <a href="#job">The job</a>
+      <a href="#departments">Departments</a>
+      <a href="#record">One record</a>
+      <a href="#neighborhoods">Neighborhoods</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="card">
+        <p class="eyebrow">Property restoration, mapped</p>
+        <h1>Every department and every job that brings a damaged property back.</h1>
+        <p class="lede">A burst pipe, a fire, a flood or mold. Follow one job from the first call to the final payment, then open any department to see who does the work.</p>
+        <div class="actions">
+          <a class="btn" href="#job">Follow a job</a>
+          <a class="btn ghost" href="#contact">Contact</a>
+        </div>
+        <small id="hero-count">Los Angeles first. Sample data is marked.</small>
+      </div>
+      <div class="err" id="load-error" hidden>
+        <p><strong>The content file did not load.</strong> This page reads <code>departments.json</code>, which browsers block when a file is opened directly from disk.</p>
+        <p>Open a terminal in this folder, run <code>python3 -m http.server</code>, then visit <code>http://localhost:8000</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="job" aria-labelledby="job-title">
+    <div class="wrap">
+      <p class="eyebrow">Follow one job</p>
+      <h2 id="job-title">A burst pipe in an older Los Angeles house.</h2>
+      <p class="lede">Fifteen steps, from the phone call to the last payment. Each step shows who is in the house and adds a line to the job record.</p>
+      <div class="job-grid">
+        <ol class="steps" role="tablist" aria-label="Steps of the job" id="steps"></ol>
+        <div class="step-panel" role="tabpanel" id="step-panel" tabindex="0">
+          <p class="eyebrow" id="step-eyebrow"></p>
+          <h3 id="step-headline"></h3>
+          <p id="step-body"></p>
+          <div class="who"><p>Who is involved</p><ul class="chips" id="step-who"></ul></div>
+          <div class="step-nav">
+            <button class="btn ghost" id="prev">Previous</button>
+            <span class="step-count" id="step-count" aria-live="polite"></span>
+            <button class="btn" id="next">Next step</button>
+          </div>
+        </div>
+        <aside class="record" aria-label="Job record so far">
+          <h3 id="record-id">Job record</h3>
+          <p class="sub" id="record-sub"></p>
+          <dl id="record-lines"></dl>
+        </aside>
+      </div>
+      <p class="sample-note">Sample job. The house, the address and the events are illustrative.</p>
+    </div>
+  </section>
+
+  <section id="departments" aria-labelledby="dep-title">
+    <div class="wrap">
+      <p class="eyebrow">The chain</p>
+      <h2 id="dep-title">Every department, from the supplier to the debris hauler.</h2>
+      <p class="lede">Open a department to see its jobs, their daily tasks, their tools, the number they are judged on and who they hand the job to next.</p>
+      <div class="map-tools">
+        <label for="q" class="eyebrow">Find a job</label>
+        <input id="q" type="search" placeholder="Estimator, plumber, adjuster..." autocomplete="off">
+        <output id="q-count" aria-live="polite"></output>
+      </div>
+      <div class="chain" id="chain"></div>
+      <div class="support">
+        <div class="stage"><h3><span id="support-name"></span></h3></div>
+        <div class="tiles" id="support-tiles"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="record" aria-labelledby="rec-title">
+    <div class="wrap">
+      <p class="eyebrow">One job record</p>
+      <h2 id="rec-title">Today one job lives in many places.</h2>
+      <p class="lede">A typical restoration job is spread across paper, phones and separate software. Each department sees its own piece. One shared record lets every department read the same job.</p>
+      <div class="compare">
+        <div>
+          <h3>Where the job lives today</h3>
+          <ul class="scatter">
+            <li>Paper drying logs</li><li>Photo folders on phones</li><li>Spreadsheets</li><li>Group texts with crews</li>
+            <li>Whiteboard schedule</li><li>Estimating software</li><li>Accounting software</li><li>Paper sign-off forms</li>
+            <li>Email threads with adjusters</li><li>Storage box lists</li>
+          </ul>
+        </div>
+        <div class="to" aria-hidden="true">&rarr;</div>
+        <div class="record" aria-label="The full job record">
+          <h3 id="full-id">Job record</h3>
+          <p class="sub">Every step, one place</p>
+          <dl id="full-lines"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="neighborhoods" aria-labelledby="hood-title">
+    <div class="wrap">
+      <p class="eyebrow">Neighborhood layer</p>
+      <h2 id="hood-title">Where the damage happens.</h2>
+      <div class="hood">
+        <svg id="parcels" viewBox="0 0 400 260" role="img" aria-label="Sketch of a city block with the sample job's parcel marked"></svg>
+        <div>
+          <span class="soon">Coming in v0.3</span>
+          <p>Every job in the data carries a location. That lets Restorlot become a layer on the City Pretty map, showing which neighborhoods carry the most repair risk: old pipes, wildfire smoke, flooding.</p>
+          <p>Build year matters most. Homes built before 1978 fall under EPA lead-safe work rules, so they need testing before demolition. <a href="https://www.epa.gov/lead/renovation-repair-and-painting-program" rel="noopener">EPA source</a>.</p>
+          <dl class="fields" id="fields"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>Contact</h2>
+        <p id="contact-line">Contact address coming soon.</p>
+        <p>Work in restoration? A review of the job descriptions by an owner or estimator would make this map better.</p>
+        <p>Restorlot is part of City Pretty.</p>
+      </div>
+      <div>
+        <h3>Sources</h3>
+        <p>Every figure on this site links to its source.</p>
+        <ol id="sources"></ol>
+      </div>
+    </div>
+    <small>No cookies on this site. v<span id="ver">0.1</span>, updated <span id="upd"></span>.</small>
+  </div>
+</footer>
+
+<dialog id="dept" aria-labelledby="dept-name">
+  <div class="dlg">
+    <header>
+      <div><p class="eyebrow" id="dept-stage"></p><h2 id="dept-name" tabindex="-1"></h2></div>
+      <button class="close" id="dept-close" aria-label="Close">&times;</button>
+    </header>
+    <div class="body" id="dept-body"></div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+  var el = function(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  var D, depts = {}, jobs = {}, stages = {}, cur = 0, lastOpener = null;
+
+  // Mobile menu
+  var mb = document.querySelector(".menu-btn"), nav = $("nav");
+  mb.addEventListener("click", function(){ var o = nav.classList.toggle("open"); mb.setAttribute("aria-expanded", o); });
+  nav.addEventListener("click", function(e){ if (e.target.tagName === "A") { nav.classList.remove("open"); mb.setAttribute("aria-expanded", "false"); } });
+
+  fetch("departments.json").then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(init).catch(function(){ $("load-error").hidden = false; });
+
+  function init(data){
+    D = data;
+    D.stages.forEach(function(s){ stages[s.id] = s; });
+    D.departments.forEach(function(d){ depts[d.id] = d; d.jobs.forEach(function(j){ jobs[j.id] = { job: j, dept: d }; }); });
+    var nJobs = Object.keys(jobs).length;
+    $("hero-count").textContent = D.departments.length + " departments, " + nJobs + " jobs, " + D.job_steps.length + " steps. " + D.meta.scope + ". Sample data is marked.";
+    $("ver").textContent = D.meta.version; $("upd").textContent = D.meta.updated;
+    if (D.meta.contact_email) { var a = el("a", null, D.meta.contact_email); a.href = "mailto:" + D.meta.contact_email; var cl = $("contact-line"); cl.textContent = "Write to "; cl.appendChild(a); }
+    renderSteps(); renderMap(); renderFull(); renderHood(); renderSources();
+  }
+
+  // ---------- Follow one job ----------
+  function renderSteps(){
+    var ol = $("steps"), sj = D.sample_jobs[0];
+    $("record-id").textContent = "Job " + sj.id; $("full-id").textContent = "Job " + sj.id;
+    $("record-sub").textContent = sj.label;
+    D.job_steps.forEach(function(s, i){
+      var li = el("li"), b = el("button");
+      b.setAttribute("role", "tab"); b.id = "tab-" + s.id; b.setAttribute("aria-controls", "step-panel");
+      b.appendChild(el("span", null, String(s.order).padStart(2, "0"))); b.appendChild(document.createTextNode(s.name));
+      b.addEventListener("click", function(){ go(i, false); });
+      li.appendChild(b); ol.appendChild(li);
+    });
+    ol.addEventListener("keydown", function(e){
+      var k = e.key, n = D.job_steps.length, t = null;
+      if (k === "ArrowRight" || k === "ArrowDown") t = Math.min(cur + 1, n - 1);
+      else if (k === "ArrowLeft" || k === "ArrowUp") t = Math.max(cur - 1, 0);
+      else if (k === "Home") t = 0; else if (k === "End") t = n - 1;
+      if (t !== null) { e.preventDefault(); go(t, true); }
+    });
+    $("prev").addEventListener("click", function(){ go(cur - 1, false); });
+    $("next").addEventListener("click", function(){ go(cur + 1, false); });
+    go(0, false);
+  }
+  function go(i, focusTab){
+    var steps = D.job_steps, n = steps.length;
+    if (i < 0 || i >= n) return;
+    cur = i; var s = steps[i];
+    Array.prototype.forEach.call($("steps").querySelectorAll("button"), function(b, k){
+      var on = k === i; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; b.classList.toggle("done", k < i);
+      if (on) { $("step-panel").setAttribute("aria-labelledby", b.id); if (focusTab) b.focus({ preventScroll: true }); var ol = $("steps"); if (ol.scrollWidth > ol.clientWidth) ol.scrollLeft = b.parentNode.offsetLeft - (ol.clientWidth - b.offsetWidth) / 2; }
+    });
+    $("step-eyebrow").textContent = "Step " + s.order + " of " + n + ", " + s.name;
+    $("step-headline").textContent = s.headline;
+    $("step-body").textContent = s.body;
+    var who = $("step-who"); who.textContent = "";
+    s.job_ids.forEach(function(id){
+      var j = jobs[id]; if (!j) return;
+      var li = el("li"), b = el("button", "chip", j.job.title);
+      b.setAttribute("aria-label", j.job.title + ", open " + j.dept.name);
+      b.addEventListener("click", function(){ openDept(j.dept.id, id, b); });
+      li.appendChild(b); who.appendChild(li);
+    });
+    $("step-count").textContent = "Step " + s.order + " of " + n;
+    $("prev").disabled = i === 0; $("next").disabled = i === n - 1;
+    var dl = $("record-lines"); dl.textContent = "";
+    for (var k = 0; k <= i; k++) dl.appendChild(recRow(steps[k].record_line, k === i));
+    highlight(s.department_ids);
+  }
+  function recRow(r, isNew){
+    var row = el("div", "row" + (isNew ? " new" : "")); row.appendChild(el("dt", null, r.label)); row.appendChild(el("dd", null, r.value)); return row;
+  }
+  function highlight(ids){
+    Array.prototype.forEach.call(document.querySelectorAll(".tile"), function(t){ t.classList.toggle("hl", ids.indexOf(t.dataset.dept) > -1); });
+  }
+
+  // ---------- Departments map ----------
+  function tile(d){
+    var b = el("button", "tile"); b.dataset.dept = d.id;
+    b.appendChild(el("strong", null, d.name));
+    b.appendChild(el("span", "meta", d.jobs.length + (d.jobs.length === 1 ? " job" : " jobs") + " · " + d.key_metric));
+    var types = []; d.jobs.forEach(function(j){ if (j.damage_type && types.indexOf(j.damage_type) < 0) types.push(j.damage_type); });
+    if (types.length) { var st = el("span", "stripe"); st.setAttribute("aria-hidden", "true"); types.forEach(function(t){ st.appendChild(el("i", t)); }); b.appendChild(st); }
+    var m = el("span", "matches"); m.hidden = true; b.appendChild(m);
+    b.addEventListener("click", function(){ openDept(d.id, null, b); });
+    return b;
+  }
+  function renderMap(){
+    var chain = $("chain");
+    D.stages.filter(function(s){ return s.id !== "support"; }).sort(function(a, b){ return a.order - b.order; }).forEach(function(s){
+      var col = el("div", "stage"), h = el("h3", null, s.name); h.appendChild(el("span", null, String(s.order).padStart(2, "0")));
+      col.appendChild(h); var t = el("div", "tiles");
+      D.departments.filter(function(d){ return d.stage === s.id; }).forEach(function(d, i){ if (i) t.appendChild(el("div", "arrow", "↓")); t.appendChild(tile(d)); });
+      col.appendChild(t); chain.appendChild(col);
+    });
+    $("support-name").textContent = stages.support.name;
+    D.departments.filter(function(d){ return d.stage === "support"; }).forEach(function(d){ $("support-tiles").appendChild(tile(d)); });
+    $("q").addEventListener("input", filter);
+    highlight(D.job_steps[cur].department_ids);
+  }
+  function filter(){
+    var q = $("q").value.trim().toLowerCase(), total = 0;
+    Array.prototype.forEach.call(document.querySelectorAll(".tile"), function(t){
+      var d = depts[t.dataset.dept], m = t.querySelector(".matches");
+      if (!q) { t.classList.remove("dim"); m.hidden = true; return; }
+      var hits = d.jobs.filter(function(j){ return j.title.toLowerCase().indexOf(q) > -1; });
+      total += hits.length; t.classList.toggle("dim", !hits.length);
+      m.hidden = !hits.length; m.textContent = hits.map(function(j){ return j.title; }).join(", ");
+    });
+    $("q-count").textContent = q ? total + (total === 1 ? " job matches" : " jobs match") : "";
+  }
+
+  // ---------- Department dialog ----------
+  var dlg = $("dept");
+  $("dept-close").addEventListener("click", function(){ dlg.close(); });
+  dlg.addEventListener("click", function(e){ if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener("close", function(){ if (lastOpener && document.contains(lastOpener)) lastOpener.focus(); });
+
+  function list(items){ var ul = el("ul"); items.forEach(function(x){ ul.appendChild(el("li", null, x)); }); return ul; }
+  function deptLinks(ids){
+    var span = el("span");
+    ids.forEach(function(id, i){
+      if (!depts[id]) return; if (i) span.appendChild(document.createTextNode(", "));
+      var b = el("button", "linkbtn", depts[id].name); b.addEventListener("click", function(){ openDept(id, null, null); }); span.appendChild(b);
+    });
+    return span;
+  }
+  function field(dl, label, node){ var w = el("div"); w.appendChild(el("dt", null, label)); var dd = el("dd"); dd.appendChild(node); w.appendChild(dd); dl.appendChild(w); }
+  function openDept(id, focusJob, opener){
+    var d = depts[id]; if (!d) return;
+    if (opener) lastOpener = opener;
+    $("dept-stage").textContent = stages[d.stage].name;
+    $("dept-name").textContent = d.name;
+    var body = $("dept-body"); body.textContent = ""; body.scrollTop = 0;
+    body.appendChild(el("p", "lede", d.summary));
+    body.appendChild(el("p", null, d.why_it_matters));
+    if (d.external_parties.length) { body.appendChild(el("h3", null, "Who is involved")); var c = el("ul", "chips"); d.external_parties.forEach(function(p){ var li = el("li"); li.appendChild(el("span", "chip", p)); c.appendChild(li); }); body.appendChild(c); }
+    body.appendChild(el("h3", null, "Jobs"));
+    d.jobs.forEach(function(j){
+      var det = el("details"), sum = el("summary"); sum.appendChild(document.createTextNode(j.title));
+      if (j.damage_type) sum.appendChild(el("span", "tag " + j.damage_type, j.damage_type));
+      if (j.external) sum.appendChild(el("span", "tag", "outside partner"));
+      det.appendChild(sum);
+      var jd = el("div", "jd"), dl = el("dl");
+      field(dl, "Daily tasks", list(j.daily_tasks));
+      field(dl, "Tools", document.createTextNode(j.tools.join(", ")));
+      if (j.certifications.length) field(dl, "Certifications", document.createTextNode(j.certifications.join(", ")));
+      field(dl, "Judged on", document.createTextNode(j.key_metric));
+      if (j.hands_off_to.length) field(dl, "Hands off to", deptLinks(j.hands_off_to));
+      jd.appendChild(dl); det.appendChild(jd);
+      if (j.id === focusJob) det.open = true;
+      body.appendChild(det);
+    });
+    body.appendChild(el("h3", null, "Department metric"));
+    body.appendChild(el("p", null, d.key_metric));
+    if (d.hands_off_to.length || d.handoff_note) {
+      body.appendChild(el("h3", null, "Next in the chain"));
+      var p = el("p"); if (d.hands_off_to.length) p.appendChild(deptLinks(d.hands_off_to));
+      if (d.handoff_note) p.appendChild(document.createTextNode((d.hands_off_to.length ? ". " : "") + d.handoff_note));
+      body.appendChild(p);
+    }
+    if (d.source_ids.length) {
+      body.appendChild(el("h3", null, "Sources"));
+      var ul = el("ul", "src");
+      d.source_ids.forEach(function(sid){ var s = D.sources.filter(function(x){ return x.id === sid; })[0]; if (!s) return; var li = el("li"), a = el("a", null, s.publisher + ": " + s.title); a.href = s.url; a.rel = "noopener"; li.appendChild(a); ul.appendChild(li); });
+      body.appendChild(ul);
+    }
+    if (!dlg.open) dlg.showModal();
+    var target = focusJob ? body.querySelector("details[open] summary") : $("dept-name");
+    (target || $("dept-name")).focus();
+  }
+
+  // ---------- One record, neighborhood, sources ----------
+  function renderFull(){ var dl = $("full-lines"); D.job_steps.forEach(function(s){ dl.appendChild(recRow(s.record_line, false)); }); }
+  function renderHood(){
+    var sj = D.sample_jobs[0], dl = $("fields");
+    [["lat", sj.lat], ["lng", sj.lng], ["neighborhood", sj.neighborhood], ["census_tract", sj.census_tract || "to come"], ["year_built", sj.year_built + " (sample)"], ["damage_type", sj.damage_type]].forEach(function(f){
+      dl.appendChild(el("dt", null, f[0])); dl.appendChild(el("dd", null, String(f[1])));
+    });
+    var svg = $("parcels"), NS = "http://www.w3.org/2000/svg";
+    function mk(tag, attrs){ var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; }
+    mk("rect", { x: 0, y: 0, width: 400, height: 260, fill: "#FFFDF8" });
+    mk("rect", { x: 0, y: 118, width: 400, height: 24, fill: "#EDE8DC" });
+    mk("rect", { x: 188, y: 0, width: 24, height: 260, fill: "#EDE8DC" });
+    var blocks = [[12, 12], [224, 12], [12, 152], [224, 152]];
+    blocks.forEach(function(b){
+      for (var r = 0; r < 2; r++) for (var c = 0; c < 4; c++) {
+        var x = b[0] + c * 41, y = b[1] + r * 49, hit = b[0] === 224 && b[1] === 152 && r === 0 && c === 1;
+        mk("rect", { x: x, y: y, width: 37, height: 45, fill: hit ? "#2C6E91" : "none", "fill-opacity": hit ? .18 : 0, stroke: hit ? "#2C6E91" : "#B8B1A3", "stroke-width": hit ? 2 : 1 });
+      }
+    });
+    mk("circle", { cx: 285.5, cy: 174.5, r: 7, fill: "#2C6E91" });
+    var t = mk("text", { x: 300, y: 250, "font-family": "ui-monospace, Menlo, monospace", "font-size": 11, fill: "#5A6360" }); t.textContent = sj.id + ", sample";
+  }
+  function renderSources(){
+    var ol = $("sources");
+    D.sources.forEach(function(s){ var li = el("li"), a = el("a", null, s.publisher + ": " + s.title); a.href = s.url; a.rel = "noopener"; li.appendChild(a); li.appendChild(document.createTextNode(" (accessed " + s.accessed + ")")); ol.appendChild(li); });
+  }
+})();
+</script>
+</body>
+</html>

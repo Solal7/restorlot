@@ -1,0 +1,11 @@
+.env*
+*.pdf
+*.docx
+.vercel/
+node_modules/
+.DS_Store
+research/
+.gstack/
+# Private project notes (ownership, accounts, emails): keep out of the public repo
+BRIEF.md
+CLAUDE.md
